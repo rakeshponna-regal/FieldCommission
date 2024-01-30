@@ -1,118 +1,57 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+// In App.js in a new project
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import * as React from 'react';
+import { View, Text, LogBox } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import SensorInfoDashboard from './src/screens/SensorInfoDashboard';
+import SensorScanning from './src/screens/SensorScanning';
+import { useEffect } from 'react';
+import SplashScreen from 'react-native-splash-screen';
+import { Provider } from 'react-redux';
+import { persistStore } from "redux-persist";
+import { PersistGate } from 'redux-persist/integration/react';
+// Import App Center Crashes at the top of the file.
+import Crashes from 'appcenter-crashes';
+import store from './src/store/store';
+import DeviceScanList from './src/screens/DeviceScanList';
+import DashboardLog from './src/screens/DashboardLog';
+import DataServiceHistory from './src/screens/dataServiceHistroy';
+import SettingsInfo from './src/screens/settingsInfo';
+import FlashMessage from 'react-native-flash-message';
+import codePush from "react-native-code-push";
+import AdvertiementLogScreen from './src/screens/AdvertiementLogScreen';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const Stack = createNativeStackNavigator();
+let persistor = persistStore(store);
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+function App() {
+  LogBox.ignoreAllLogs()
+  useEffect(() => {
+    SplashScreen.hide()
+  });
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="deviceScan" component={DeviceScanList} options={{ title: 'Scan', headerShown: false }} />
+            {/* <Stack.Screen name="deviceScan" component={SensorScanning} options={{ title: 'Scan', headerShown: false }} /> */}
+            <Stack.Screen name="dashboardLogs" component={DashboardLog} options={{ title: 'Advatisement', headerShown: false }} />
+            <Stack.Screen name="advertiementLogs" component={AdvertiementLogScreen} options={{ title: 'Advatisement', headerShown: false }} />
+            <Stack.Screen name="dashboard" component={SensorInfoDashboard} options={{ headerShown: false }} />
+            <Stack.Screen name="DataServiceHistory" component={DataServiceHistory} options={{ title: 'Advatisement', headerShown: false }} />
+            <Stack.Screen name="SettingsInfo" component={SettingsInfo} options={{ title: 'Advatisement', headerShown: false }} />
+
+          </Stack.Navigator>
+        </NavigationContainer>
+        <FlashMessage position="center"
+          icon="auto"
+          duration={2000} />
+      </PersistGate>
+    </Provider>
+
   );
 }
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;
+export default codePush(App);

@@ -76,13 +76,57 @@ android {
 
     namespace "com.fieldcommission"
     defaultConfig {
-        // applicationId "com.fieldcommission"
-        applicationId "com.perceptivcommission"
+        applicationId "com.fieldcommission"
+        // applicationId applicationId
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+         manifestPlaceholders = [
+             appAuthRedirectScheme: 'com.okta.dev-33134057'
+            ]
+         buildConfigField("boolean", "REACT_NATIVE_UNSTABLE_USE_RUNTIME_SCHEDULER_ALWAYS", (findProperty("reactNative.unstable_useRuntimeSchedulerAlways") ?: true).toString())
     }
+
+    // flavorDimensions "wrapper"
+    // productFlavors {
+        // dev {
+        //     dimension "wrapper"
+        //     applicationId computePackage("com.perceptivcommission")
+        //     versionNameSuffix "-DEV-"
+        //     applicationIdSuffix ".dev"
+        //     resValue "string", "app_name", "perceptivcommission-Dev"
+        //     proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules-qa-and-prod.pro'
+        //     testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-test-rules.pro'
+        // }
+        // qa {
+        //     dimension "wrapper"
+        //     applicationId computePackage("com.perceptivcommission")
+        //     versionNameSuffix "-QA-"
+        //     applicationIdSuffix ".qa"
+        //     resValue "string", "app_name", "perceptivcommission-QA"
+        //     proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules-qa-and-prod.pro'
+        //     testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-test-rules.pro'
+        // }
+        // uat {
+        //     dimension "wrapper"
+        //     applicationId computePackage("com.perceptivcommission")
+        //     versionNameSuffix "-UAT-"
+        //     applicationIdSuffix ".uat"
+        //     resValue "string", "app_name", "perceptivcommission-Uat"
+        //     proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules-qa-and-prod.pro'
+        //     testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-test-rules.pro'
+        // }
+        // prod {
+        //     dimension "wrapper"
+        //     applicationId computePackage("com.perceptivcommission")
+        //     versionNameSuffix "-PROD-"
+        //     applicationIdSuffix ".production"
+        //     resValue "string", "app_name", "perceptivcommission"
+        //     proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules-qa-and-prod.pro'
+        //     testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-test-rules.pro'
+        // }
+    //}
     signingConfigs {
         release {
             if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
@@ -110,6 +154,7 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+           
         }
     }
     lintOptions {
@@ -137,6 +182,13 @@ dependencies {
         implementation jscFlavor
     }
 }
+// project.ext.envConfigFiles = [
+//   dev: ".env.dev",
+//   qa: ".env.qa",
+//   uat: ".env.uat",
+//   prod: ".env.production",
+// ]
 apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+// apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"

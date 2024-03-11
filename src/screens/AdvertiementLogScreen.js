@@ -19,7 +19,7 @@ import XLSX from 'xlsx';
 import * as ExcelJS from 'exceljs';
 import Share from 'react-native-share';
 
-const AdvertiementLogScreen = ({ navigation }) => {
+const AdvertisementLogScreen = ({ navigation }) => {
     const dispatch = useDispatch();
     const dataBySensorNumberSel = useSelector(dataBySensorNumberSelector)
     const [tableDataArray, setTableDataArray] = useState([]);
@@ -294,6 +294,6 @@ const AdvertiementLogScreen = ({ navigation }) => {
     )
 }
 
-export default AdvertiementLogScreen
+export default AdvertisementLogScreen
 
 const styles = StyleSheet.create({})

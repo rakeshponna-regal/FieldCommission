@@ -1,10 +1,12 @@
 import React, { useState, useCallback } from 'react'
-import { TouchableOpacity, StyleSheet, View, SafeAreaView, Image, Alert } from 'react-native'
+import { TouchableOpacity, StyleSheet, View, SafeAreaView, Image, Alert ,Platform} from 'react-native'
 import { Checkbox, Text, TextInput } from 'react-native-paper'
 import Spinner from 'react-native-loading-spinner-overlay';
 import Error from '../components/Error';
 import { signIn } from '@okta/okta-react-native';
 import configFile from '../../okta.config';
+import VersionInfo from 'react-native-version-info';
+
 import {
     authorize,
     refresh,
@@ -32,6 +34,12 @@ export default function LoginScreen({ navigation }) {
     const [error, setError] = useState('');
     const [isPasswordSecure, setIsPasswordSecure] = useState(true);
     const API_HOST = env.API_HOST;
+    const version = Platform.constants;
+    console.log("version",version,VersionInfo)
+    console.log('App version:', VersionInfo.appVersion);
+   console.log('Build version:', VersionInfo.buildVersion);
+
+
     console.log("API_HOST => ",API_HOST)
     const reset = useCallback(() => {
         setProgress(false);

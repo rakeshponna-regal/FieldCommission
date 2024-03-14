@@ -2,6 +2,20 @@ apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 
+import com.android.build.OutputFile
+
+project.ext.envConfigFiles = [
+  developmentdebug: ".env.dev",
+  developmentrelease: ".env.dev",
+  qadebug: ".env.qa",
+  qarelease: ".env.qa",
+  uatdebug: ".env.uat",
+  uatrelease: ".env.uat",
+  productiondebug: ".env.production",
+  productionrelease: ".env.production",
+]
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
@@ -57,6 +71,14 @@ react {
 def enableProguardInReleaseBuilds = false
 
 /**
+ * Set this to true to create four separate APKs instead of one,
+ * one for each native architecture. This is useful if you don't
+ * use App Bundles (https://developer.android.com/guide/app-bundle/)
+ * and want to have separate APKs to upload to the Play Store.
+ */
+def enableSeparateBuildPerCPUArchitecture = false
+
+/**
  * The preferred build flavor of JavaScriptCore (JSC)
  *
  * For example, to use the international variant, you can use:
@@ -68,6 +90,17 @@ def enableProguardInReleaseBuilds = false
  * this variant is about 6MiB larger per architecture than default.
  */
 def jscFlavor = 'org.webkit:android-jsc:+'
+
+
+/**
+ * Private function to get the list of Native Architectures you want to build.
+ * This reads the value from reactNativeArchitectures in your gradle.properties
+ * file and works together with the --active-arch-only flag of react-native run-android.
+ */
+def reactNativeArchitectures() {
+    def value = project.getProperties().get("reactNativeArchitectures")
+    return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
+}
 
 android {
     ndkVersion rootProject.ext.ndkVersion
@@ -88,45 +121,56 @@ android {
          buildConfigField("boolean", "REACT_NATIVE_UNSTABLE_USE_RUNTIME_SCHEDULER_ALWAYS", (findProperty("reactNative.unstable_useRuntimeSchedulerAlways") ?: true).toString())
     }
 
-    // flavorDimensions "wrapper"
-    // productFlavors {
-        // dev {
-        //     dimension "wrapper"
-        //     applicationId computePackage("com.perceptivcommission")
-        //     versionNameSuffix "-DEV-"
-        //     applicationIdSuffix ".dev"
-        //     resValue "string", "app_name", "perceptivcommission-Dev"
-        //     proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules-qa-and-prod.pro'
-        //     testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-test-rules.pro'
-        // }
-        // qa {
-        //     dimension "wrapper"
-        //     applicationId computePackage("com.perceptivcommission")
-        //     versionNameSuffix "-QA-"
-        //     applicationIdSuffix ".qa"
-        //     resValue "string", "app_name", "perceptivcommission-QA"
-        //     proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules-qa-and-prod.pro'
-        //     testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-test-rules.pro'
-        // }
-        // uat {
-        //     dimension "wrapper"
-        //     applicationId computePackage("com.perceptivcommission")
-        //     versionNameSuffix "-UAT-"
-        //     applicationIdSuffix ".uat"
-        //     resValue "string", "app_name", "perceptivcommission-Uat"
-        //     proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules-qa-and-prod.pro'
-        //     testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-test-rules.pro'
-        // }
-        // prod {
-        //     dimension "wrapper"
-        //     applicationId computePackage("com.perceptivcommission")
-        //     versionNameSuffix "-PROD-"
-        //     applicationIdSuffix ".production"
-        //     resValue "string", "app_name", "perceptivcommission"
-        //     proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules-qa-and-prod.pro'
-        //     testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-test-rules.pro'
-        // }
-    //}
+    flavorDimensions "wrapper"
+    productFlavors {
+        development {
+            dimension "wrapper"
+            applicationId computePackage("com.perceptivcommission")
+            versionNameSuffix ".DEV"
+            applicationIdSuffix ".development"
+            resValue "string", "app_name", "Dev-Perceptiv"
+            resValue "string", "build_config_package", "com.fieldcommission"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules-qa-and-prod.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-test-rules.pro'
+        }
+        qa {
+            dimension "wrapper"
+            applicationId computePackage("com.perceptivcommission")
+            versionNameSuffix ".QA"
+            applicationIdSuffix ".qa"
+            resValue "string", "app_name", "QA-Perceptiv"
+            resValue "string", "build_config_package", "com.fieldcommission"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules-qa-and-prod.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-test-rules.pro'
+        }
+        uat {
+            dimension "wrapper"
+            applicationId computePackage("com.perceptivcommission")
+            versionNameSuffix ".UAT"
+            applicationIdSuffix ".uat"
+            resValue "string", "app_name", "UAT-Perceptiv"
+             resValue "string", "build_config_package", "com.fieldcommission"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules-qa-and-prod.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-test-rules.pro'
+        }
+        production {
+            dimension "wrapper"
+            applicationId computePackage("com.perceptivcommission")
+            versionNameSuffix ".PROD"
+            resValue "string", "app_name", "perceptivcommission"
+             resValue "string", "build_config_package", "com.fieldcommission"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules-qa-and-prod.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-test-rules.pro'
+        }
+    }
+     splits {
+        abi {
+            reset()
+            enable enableSeparateBuildPerCPUArchitecture
+            universalApk false  // If true, also generate a universal APK
+            include (*reactNativeArchitectures())
+        }
+    }
     signingConfigs {
         release {
             if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
@@ -146,6 +190,7 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            matchingFallbacks = ['debug', 'release']
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
@@ -155,6 +200,21 @@ android {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
            
+        }
+    }
+    // applicationVariants are e.g. debug, release
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            // For each separate APK per architecture, set a unique version code as described here:
+            // https://developer.android.com/studio/build/configure-apk-splits.html
+            // Example: versionCode 1 will generate 1001 for armeabi-v7a, 1002 for x86, etc.
+            def versionCodes = ["armeabi-v7a": 1, "x86": 2, "arm64-v8a": 3, "x86_64": 4]
+            def abi = output.getFilter(OutputFile.ABI)
+            if (abi != null) {  // null for the universal-debug, universal-release variants
+                output.versionCodeOverride =
+                        defaultConfig.versionCode * 1000 + versionCodes.get(abi)
+            }
+
         }
     }
     lintOptions {
@@ -182,13 +242,17 @@ dependencies {
         implementation jscFlavor
     }
 }
-// project.ext.envConfigFiles = [
-//   dev: ".env.dev",
-//   qa: ".env.qa",
-//   uat: ".env.uat",
-//   prod: ".env.production",
-// ]
 apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
-// apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+
+//https://medium.com/@svbala99/react-native-set-up-environment-flavours-dev-staging-prod-using-react-native-config-update-c09b0081e424
+
+// to differentaite file name 
+// Step 6: Create folders inside android > app > src folder
+
+// Copy paste “main” folder thrice, and rename them as the same name we provided in build.gradle : development, staging, production
+// Delete “java” folder inside all those 3 folders
+// Inside each of these 3 folders, > res > values > strings.xml — update the app name with whatever required like this : “My Dev App”, “My Staging App”, …
+// Delete AndroidManifest.xml files inside “development” and “production” folders.
+// Don’t disturb these folders : debug, release, main

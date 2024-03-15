@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1210"
+   LastUpgradeVersion = "1500"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -10,13 +10,13 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;rm &quot;${CONFIGURATION_BUILD_DIR}/${INFOPLIST_PATH}&quot;&#10;echo &quot;.env.production&quot; &gt; /tmp/envfile&#10;">
+               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;rm &quot;${CONFIGURATION_BUILD_DIR}/${INFOPLIST_PATH}&quot;&#10;echo &quot;.env.uat&quot; &gt; /tmp/envfile&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
-                     BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-                     BuildableName = "FieldCommission.app"
-                     BlueprintName = "FieldCommission"
+                     BlueprintIdentifier = "0BD44CB72BA31B480075C321"
+                     BuildableName = "FieldCommissionUat.app"
+                     BlueprintName = "FieldCommissionUat"
                      ReferencedContainer = "container:FieldCommission.xcodeproj">
                   </BuildableReference>
                </EnvironmentBuildable>
@@ -30,9 +30,9 @@
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
-                     BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-                     BuildableName = "FieldCommission.app"
-                     BlueprintName = "FieldCommission"
+                     BlueprintIdentifier = "0BD44CB72BA31B480075C321"
+                     BuildableName = "FieldCommissionUat.app"
+                     BlueprintName = "FieldCommissionUat"
                      ReferencedContainer = "container:FieldCommission.xcodeproj">
                   </BuildableReference>
                </EnvironmentBuildable>
@@ -48,9 +48,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "FieldCommission.app"
-               BlueprintName = "FieldCommission"
+               BlueprintIdentifier = "0BD44CB72BA31B480075C321"
+               BuildableName = "FieldCommissionUat.app"
+               BlueprintName = "FieldCommissionUat"
                ReferencedContainer = "container:FieldCommission.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -60,9 +60,8 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
-      <Testables>
-      </Testables>
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      shouldAutocreateTestPlan = "YES">
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -78,9 +77,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "FieldCommission.app"
-            BlueprintName = "FieldCommission"
+            BlueprintIdentifier = "0BD44CB72BA31B480075C321"
+            BuildableName = "FieldCommissionUat.app"
+            BlueprintName = "FieldCommissionUat"
             ReferencedContainer = "container:FieldCommission.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -95,9 +94,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "FieldCommission.app"
-            BlueprintName = "FieldCommission"
+            BlueprintIdentifier = "0BD44CB72BA31B480075C321"
+            BuildableName = "FieldCommissionUat.app"
+            BlueprintName = "FieldCommissionUat"
             ReferencedContainer = "container:FieldCommission.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

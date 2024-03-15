@@ -11,7 +11,12 @@
     "rstart": "npm run start -- --reset-cache",
     "adb-r": "adb reverse tcp:8081 tcp:8081",
     "clean": "cd android && ./gradlew clean",
+    "setDevelopment": "ENVFILE=.env.dev",
+    "setQA": "ENVFILE=.env.qa",
+    "setUat": "ENVFILE=.env.uat",
+    "setProduction": "ENVFILE=.env.production",
 
+    
     "android:dev": "react-native run-android --mode=developmentdebug --appId fieldcommission.development",
     "android:dev-release": "react-native run-android --mode=developmentrelease --appId fieldcommission.development",
     "android:qa": "react-native run-android --mode=qadebug --appId com.fieldcommission.qa",
@@ -33,6 +38,18 @@
     "androidProductionDebugAPK": "npm run clean && cd android && ./gradlew assembleProductionDebug && killall -9 java && open ./android/app/build/outputs/apk/development/debug",
     "androidProductionReleaseAPK": "npm run clean && cd android && ./gradlew assembleProductionRelease && killall -9 java && open ./android/app/build/outputs/apk/development/release",
     "androidProductionReleaseAAB": "npm run clean && cd android && ./gradlew bundleProductionRelease && killall -9 java && open ./android/app/build/outputs/bundle/development/release",
+    
+    "ios:Pod:Reset": "cd ios && pod deintegrate && pod setup && pod install",
+    "ios:clean": "npm node:clean &&  cd ios && rm -rf ~/Library/Caches/CocoaPods && rm -rf Pods && rm -rf ~/Library/Developer/Xcode/DerivedData/* && yarn ios:Pod:Reset",
+    "ios:Pod:install": "cd ios && pod install && cd ..",
+    "ios:bundle:assets": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios",
+    "ios:qa": "npm run setQA  react-native run-ios --mode=Debug --scheme \"FieldCommissionQa\"",
+    "ios:uat": "npm run setUat  react-native run-ios --mode=Debug --scheme \"FieldCommissionUat\"",
+    "ios:production": "npm run setProduction  react-native run-ios --mode=Debug --scheme \"FieldCommission\"",
+    "ios:qa-release": " npm run setQA  react-native run-ios --mode=Release --scheme \"FieldCommissionQa\"",
+
+    "ios:prod": "npm run setProduction  react-native run-ios --mode=Debug --scheme \"FieldCommission\"",
+    "ios:prod-release": " npm run ios:bundle:assets && npm run setProduction  react-native run-ios --mode=Release --scheme \"FieldCommission\"",
 
     "test": "jest"
   },

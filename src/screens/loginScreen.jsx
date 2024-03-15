@@ -6,7 +6,7 @@ import Error from '../components/Error';
 import { signIn } from '@okta/okta-react-native';
 import configFile from '../../okta.config';
 import VersionInfo from 'react-native-version-info';
-
+//https://github.com/FormidableLabs/react-native-app-auth/tree/main/Example
 import {
     authorize,
     refresh,

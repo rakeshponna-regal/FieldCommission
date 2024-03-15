@@ -15,8 +15,6 @@
     "setQA": "ENVFILE=.env.qa",
     "setUat": "ENVFILE=.env.uat",
     "setProduction": "ENVFILE=.env.production",
-
-    
     "android:dev": "react-native run-android --mode=developmentdebug --appId fieldcommission.development",
     "android:dev-release": "react-native run-android --mode=developmentrelease --appId fieldcommission.development",
     "android:qa": "react-native run-android --mode=qadebug --appId com.fieldcommission.qa",
@@ -25,7 +23,6 @@
     "android:uat-release": "react-native run-android --mode=uatrelease --appId fieldcommission.uat",
     "android:prod": "react-native run-android --mode=productiondebug --appId com.fieldcommission",
     "android:prod-release": "react-native run-android --mode=productionrelease --appId com.fieldcommission",
-  
     "androidDevelopmentDebugAPK": "npm run clean && cd android && ./gradlew assembleDevelopmentDebug && killall -9 java && open ./android/app/build/outputs/apk/development/debug",
     "androidDevelopmentReleaseAPK": "npm run clean && cd android && ./gradlew assembleDevelopmentRelease && killall -9 java && open ./android/app/build/outputs/apk/development/release",
     "androidDevelopmentReleaseAAB": "npm run clean && cd android && ./gradlew bundleDevelopmentRelease && killall -9 java && open ./android/app/build/outputs/bundle/development/release",
@@ -38,7 +35,6 @@
     "androidProductionDebugAPK": "npm run clean && cd android && ./gradlew assembleProductionDebug && killall -9 java && open ./android/app/build/outputs/apk/development/debug",
     "androidProductionReleaseAPK": "npm run clean && cd android && ./gradlew assembleProductionRelease && killall -9 java && open ./android/app/build/outputs/apk/development/release",
     "androidProductionReleaseAAB": "npm run clean && cd android && ./gradlew bundleProductionRelease && killall -9 java && open ./android/app/build/outputs/bundle/development/release",
-    
     "ios:Pod:Reset": "cd ios && pod deintegrate && pod setup && pod install",
     "ios:clean": "npm node:clean &&  cd ios && rm -rf ~/Library/Caches/CocoaPods && rm -rf Pods && rm -rf ~/Library/Developer/Xcode/DerivedData/* && yarn ios:Pod:Reset",
     "ios:Pod:install": "cd ios && pod install && cd ..",
@@ -47,10 +43,8 @@
     "ios:uat": "npm run setUat  react-native run-ios --mode=Debug --scheme \"FieldCommissionUat\"",
     "ios:production": "npm run setProduction  react-native run-ios --mode=Debug --scheme \"FieldCommission\"",
     "ios:qa-release": " npm run setQA  react-native run-ios --mode=Release --scheme \"FieldCommissionQa\"",
-
     "ios:prod": "npm run setProduction  react-native run-ios --mode=Debug --scheme \"FieldCommission\"",
     "ios:prod-release": " npm run ios:bundle:assets && npm run setProduction  react-native run-ios --mode=Release --scheme \"FieldCommission\"",
-
     "test": "jest"
   },
   "dependencies": {
@@ -67,8 +61,10 @@
     "base-64": "^1.0.0",
     "buffer": "^6.0.3",
     "exceljs": "^4.4.0",
+    "i18next": "^23.10.1",
     "moment": "^2.30.1",
     "react": "18.2.0",
+    "react-i18next": "^14.1.0",
     "react-native": "0.73.0",
     "react-native-app-auth": "^7.1.3",
     "react-native-ble-manager": "^10.0.2",

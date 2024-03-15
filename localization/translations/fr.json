@@ -1,0 +1,25 @@
+{
+    "language": "French",
+    "screens": {
+        "intro": {
+            "title": "Écran d'introduction",
+            "text": {
+                "introText": "voici le texte d'introduction en français",
+                "login": "Connexion",
+                "signup": "S'inscrire"
+            }
+        },
+        "login": {
+            "title": "S'identifier",
+            "okta_title":"Informations de connexion Okta",
+            "text": {
+                "login": "connexion",
+                "emailAddress": "Adresse e-mail",
+                "password": "mot de passe",
+                "continue": "Continuer",
+                "createAccount": "Créer un compte",
+                "forgotPassword": "Mot de passe oublié?"
+            }
+        }
+    }
+}

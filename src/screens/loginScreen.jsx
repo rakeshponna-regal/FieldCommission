@@ -6,6 +6,8 @@ import Error from '../components/Error';
 import { signIn } from '@okta/okta-react-native';
 import configFile from '../../okta.config';
 import VersionInfo from 'react-native-version-info';
+import { useTranslation } from 'react-i18next';
+
 //https://github.com/FormidableLabs/react-native-app-auth/tree/main/Example
 import {
     authorize,
@@ -27,6 +29,8 @@ const oktaConfigs = {
 };
 
 export default function LoginScreen({ navigation }) {
+    const { t,i18n } = useTranslation();
+
     const [username, setUsername] = useState({ value: '', error: '' })
     const [password, setPassword] = useState({ value: '', error: '' })
     const [checked, setChecked] = useState(false)
@@ -87,7 +91,8 @@ export default function LoginScreen({ navigation }) {
 
     return (
         <SafeAreaView forceInset={{ top: 'always' }} style={{ flex: 1, }}>
-            <Image
+             <TouchableOpacity onPress={() => i18n.changeLanguage("en")}>
+             <Image
                 style={{
                     alignSelf: 'center',
                     marginTop: 10,
@@ -96,7 +101,9 @@ export default function LoginScreen({ navigation }) {
                 }}
                 source={require('../assets/app_logo.png')}
             />
-            <FormLabel style={{ alignSelf: 'center', color: '#000000' }}>Okta Login details</FormLabel>
+             </TouchableOpacity>
+            
+            <FormLabel style={{ alignSelf: 'center', color: '#000000' }}>{t("screens.login.okta_title")}</FormLabel>
             <FormValue style={{ alignSelf: 'center' }}>harsha@gmail.com/Regal@123</FormValue>
             <FormValue style={{ alignSelf: 'center' }}>ravi@gmail.com/8vNLf9WW</FormValue>
             <FormValue style={{ alignSelf: 'center' }}>rakeshponnaregal@gmail.com/Regal@123</FormValue>

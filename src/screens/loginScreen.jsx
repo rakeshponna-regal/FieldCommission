@@ -89,6 +89,14 @@ export default function LoginScreen({ navigation }) {
         }
     }, []);
 
+    const skipLogin = useCallback(async provider => {
+        try {
+            navigation.navigate('deviceScan');
+        } catch (error) {
+            Alert.alert('Failed to log in', error.message);
+        }
+    }, []);
+
     return (
         <SafeAreaView forceInset={{ top: 'always' }} style={{ flex: 1, }}>
              <TouchableOpacity onPress={() => i18n.changeLanguage("en")}>
@@ -127,6 +135,7 @@ export default function LoginScreen({ navigation }) {
                             label={'User Name'}
                             testID="usernameTextInput"
                             style={styles.inputText}
+                            inputMode="email"
                             placeholderTextColor="#003f5c"
                             onChangeText={text => setUsername(text)} />
                     </View>
@@ -197,6 +206,12 @@ export default function LoginScreen({ navigation }) {
                         <Text
                             testID="signAuthorize"
                             style={styles.loginText}>OKTA Authorize </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={[styles.loginBtn,{backgroundColor: "#00FF0000", }]} onPress={skipLogin}>
+                        <Text
+                            testID="signAuthorize"
+                            style={[styles.loginText,{color: "#6d6d6d", fontSize: 14,}]}>Skip Login</Text>
                     </TouchableOpacity>
                 </View>
             </View>

@@ -6,7 +6,8 @@ import {
     View,
     StatusBar,
     Button,
-    Alert
+    Alert,
+    TouchableOpacity
 } from 'react-native';
 import { getAccessToken, getUser, clearTokens, refreshTokens } from '@okta/okta-react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -60,6 +61,7 @@ const ProfileScreen = ({ navigation }) => {
     }, [navigation]);
 
     const fetchAccessToken = useCallback(() => {
+        console.log('fetchAccessToken called')
         setProgress(true);
         getAccessToken()
             .then(token => {
@@ -74,6 +76,7 @@ const ProfileScreen = ({ navigation }) => {
     }, []);
 
     const fetchRefreshToken = useCallback(() => {
+        console.log('refresh Token called')
         setProgress(true);
         refreshTokens()
             .then(token => {
@@ -128,7 +131,51 @@ const ProfileScreen = ({ navigation }) => {
                 />
 
                 <View style={{ flexDirection: 'column', marginTop: 20, paddingLeft: 10, width: '90%', alignSelf: 'center' }}>
-                    <Button
+
+                    <TouchableOpacity style={{
+                        justifyContent: 'center',
+                        backgroundColor: '#DA2536',
+                        borderRadius: 10,
+                        width: 100,
+                        alignSelf: 'center',
+                        alignItems: "center",
+                        justifyContent: 'center',
+                        paddingEnd: 15,
+                        paddingStart: 15,
+                        height: 35,
+                        marginLeft: 20,
+                        borderBottomLeftRadius: 5,
+                        borderBottomRightRadius: 5,
+                        borderTopLeftRadius: 5,
+                        borderTopRightRadius: 5,
+                    }}
+                        onPress={() => {
+                            if (user) {
+                                logoutApp()
+                            } else {
+                                logoutAuth()
+                            }
+                        }}
+                    >
+                        <View style={{
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            height: 40,
+                            flexDirection: 'row',
+                        }}>
+                            <Text style={{
+                                color: 'white',
+                                textAlign: 'center',
+                                fontSize: 18,
+                                fontWeight: 600,
+                                fontFamily: 'nunito-bold',
+                                color: "#FFFFFF",
+                            }}>
+                                Log out
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                    {/* <Button
                         style={[styles.logoutButton, { marginTop: 10, marginLeft: 20, padding: 10, }]}
                         onPress={() => {
                             if (user) {
@@ -139,7 +186,7 @@ const ProfileScreen = ({ navigation }) => {
                         }}
                         title="Log out"
                         color="#DA2536"
-                    />
+                    /> */}
                 </View>
                 <Error error={error} />
                 {user && (
@@ -168,10 +215,43 @@ const ProfileScreen = ({ navigation }) => {
                                 //     <Text style={{ marginTop: 20 }} numberOfLines={5}>{accessToken}</Text>
                                 // </View>
                             )}
+                            
                         </View>
-                        <Button testID="accessButton" style={{ marginTop: 40, borderRadius: 10 }} title="Refresh token" onPress={() => {
-                            fetchRefreshToken()
-                        }} />
+                        <Button testID="accessButton" style={{ marginTop: 40, borderRadius: 10 , }}  title="Refresh token"   onPress={() => {
+                                fetchRefreshToken()
+                            }} />
+
+                        {/* <TouchableOpacity
+                            style={{
+                                justifyContent: 'center',
+                                backgroundColor: '#6d6d6d',
+                                borderRadius: 10,
+                                width: '50%',
+                                alignSelf: 'center',
+                                alignItems: "center",
+                                justifyContent: 'center',
+                                paddingEnd: 15,
+                                paddingStart: 15,
+                                height: 35,
+                                marginLeft: 20,
+                                borderBottomLeftRadius: 5,
+                                borderBottomRightRadius: 5,
+                                borderTopLeftRadius: 5,
+                                borderTopRightRadius: 5,
+                            }}
+                            onPress={() => {
+                                fetchRefreshToken()
+                            }}
+                        >
+                            <Button testID="accessButton" style={{ marginTop: 40, borderRadius: 10 }} color="#FFF" title="Refresh token"   onPress={() => {
+                                fetchRefreshToken()
+                            }} />
+
+                        </TouchableOpacity> */}
+
+                      
+
+
                     </Form>
                 )}
 
@@ -184,22 +264,85 @@ const ProfileScreen = ({ navigation }) => {
                             <FormValue>{moment(authState.accessTokenExpirationDate).format('DD MMMM YYYY HH:mm:ss')}</FormValue>
                             <FormLabel>RefreshToken</FormLabel>
                             <FormValue>{authState.refreshToken}</FormValue>
-                            <Button testID="accessButton" style={{ marginTop: 40, borderRadius: 10 }} title="Refresh token" onPress={() => {
-                                handleRefresh()
-                            }} />
+                            <TouchableOpacity
+                                style={{
+                                    justifyContent: 'center',
+                                    backgroundColor: '#6d6d6d',
+                                    borderRadius: 10,
+                                    width: '100%',
+                                    alignSelf: 'center',
+                                    alignItems: "center",
+                                    justifyContent: 'center',
+                                    paddingEnd: 15,
+                                    paddingStart: 15,
+                                    height: 35,
+                                    marginLeft: 20,
+                                    borderBottomLeftRadius: 5,
+                                    borderBottomRightRadius: 5,
+                                    borderTopLeftRadius: 5,
+                                    borderTopRightRadius: 5,
+                                }}
+                            >
+                                <Button testID="accessButton" style={{ marginTop: 40, borderRadius: 10, }} color="#FFF" title="Refresh token" onPress={() => {
+                                    handleRefresh()
+                                }} />
+
+                            </TouchableOpacity>
+
                         </Form>
                     )
                 }
 
                 <View style={{ flexDirection: 'column', marginTop: 20, paddingLeft: 20, width: '90%' }}>
-                    <Button
+
+                    <TouchableOpacity style={{
+                        justifyContent: 'center',
+                        backgroundColor: '#24C2CB',
+                        borderRadius: 10,
+                        width: '100%',
+                        alignSelf: 'center',
+                        alignItems: "center",
+                        justifyContent: 'center',
+                        paddingEnd: 15,
+                        paddingStart: 15,
+                        height: 35,
+                        marginLeft: 20,
+                        borderBottomLeftRadius: 5,
+                        borderBottomRightRadius: 5,
+                        borderTopLeftRadius: 5,
+                        borderTopRightRadius: 5,
+                    }}
+                        onPress={() => {
+                            navigation.navigate("deviceScan")
+                        }}
+                    >
+                        <View style={{
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            height: 40,
+                            flexDirection: 'row',
+                        }}>
+                            <Text style={{
+                                color: 'white',
+                                textAlign: 'center',
+                                fontSize: 18,
+                                fontWeight: 600,
+                                fontFamily: 'nunito-bold',
+                                color: "#FFFFFF",
+                            }}>
+                                Home Screen
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    {/* <Button
                         style={{ marginTop: 40, borderRadius: 20 }}
                         onPress={() => {
                             navigation.navigate("deviceScan")
                         }}
                         title="Home Screen"
                         color="#24C2CB"
-                    />
+                    /> */}
 
                 </View>
 

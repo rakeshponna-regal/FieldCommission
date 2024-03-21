@@ -113,8 +113,8 @@ android {
         // applicationId applicationId
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
          manifestPlaceholders = [
              appAuthRedirectScheme: 'com.okta.dev-33134057'
             ]
@@ -156,7 +156,7 @@ android {
         production {
             dimension "wrapper"
             applicationId computePackage("com.perceptivcommission")
-            versionNameSuffix ".PROD"
+            versionNameSuffix ""
             resValue "string", "app_name", "perceptivcommission"
              resValue "string", "build_config_package", "com.fieldcommission"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules-qa-and-prod.pro'
